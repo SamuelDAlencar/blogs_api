@@ -1,21 +1,25 @@
-const { User } = require('../database/models');
-const generateJwt = require('../utils/generateJwt');
+const userServices = require('../services/userServices');
 
 module.exports = {
   signUp: async (req, res) => {
-    const { displayName, email, image } = req.body;
-    const userData = req.body;
-    const payload = { displayName, email, image };
-    const token = generateJwt(payload);
-
-    await User.create(userData);
+    const token = await userServices.signUp(req.body);
 
     return res.status(201).json({ token });
   },
 
   getAll: async (req, res) => {
-    const users = await User.findAll({ attributes: { exclude: ['password'] } });
+    const users = await userServices.getAll();
 
     res.status(200).json(users);
+  },
+
+  getById: async (req, res) => {
+    try {
+      const user = await userServices.getById(req.params.id);
+
+      res.status(200).json(user);
+    } catch (error) {
+      return res.status(error.status).json({ message: error.message });
+    }
   },
 };

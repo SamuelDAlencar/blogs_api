@@ -1,10 +1,9 @@
-const generateJwt = require('../utils/generateJwt');
+const loginServices = require('../services/loginServices');
 
 module.exports = {
   login: (req, res) => {
     const { email } = req.body;
-
-    const token = generateJwt(email);
+    const token = loginServices.login(email);
 
     return res.status(200).json({ token });
   },
