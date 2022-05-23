@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const jwt = require('jsonwebtoken');
 const { User } = require('../database/models');
 
 const loginJoi = (data) => {
@@ -68,6 +69,30 @@ module.exports = {
 
     if (userExists) {
       return res.status(409).json({ message: 'User already registered' });
+    }
+  },
+
+  validateToken: async (req, res, next) => {
+    try {
+      const token = req.headers.authorization;
+
+      if (!token) {
+        return res.status(401).json({ message: 'Token not found' });
+      }
+
+      const secret = process.env.JWT_SECRET;
+      const decodedToken = jwt.verify(token, secret);
+      const user = await User.findOne({ where: { email: decodedToken.data } });
+
+      if (!user) {
+        return res.status(401).json({ message: 'Expired or invalid token' });
+      }
+
+      next();
+    } catch (error) {
+      console.log(error.message);
+
+      return res.status(401).json({ message: 'Expired or invalid token' });
     }
   },
 };
