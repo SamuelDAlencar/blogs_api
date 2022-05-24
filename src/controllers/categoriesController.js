@@ -12,4 +12,10 @@ module.exports = {
       return res.status(error.status).json({ message: error.message });
     }
   },
+
+  getAll: async (_req, res) => {
+    const categories = await categoriesServices.getAll();
+
+    return res.status(200).json(categories);
+  },
 };
