@@ -1,16 +1,18 @@
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
-const { User } = require('../database/models');
+const { User, Category } = require('../database/models');
+
+const EMPTY_FIELD_ERROR = 'Some required fields are missing';
 
 const loginJoi = (data) => {
   const schema = Joi.object({
     email: Joi.string().email().required().messages({
-      'any.required': 'Some required fields are missing',
-      'string.empty': 'Some required fields are missing',
+      'any.required': EMPTY_FIELD_ERROR,
+      'string.empty': EMPTY_FIELD_ERROR,
     }),
     password: Joi.string().required().messages({
-      'any.required': 'Some required fields are missing',
-      'string.empty': 'Some required fields are missing',
+      'any.required': EMPTY_FIELD_ERROR,
+      'string.empty': EMPTY_FIELD_ERROR,
     }),
   });
 
@@ -94,5 +96,29 @@ module.exports = {
 
       return res.status(401).json({ message: 'Expired or invalid token' });
     }
+  },
+
+  validatePost: async (req, res, next) => {
+    const { title, content, categoryIds } = req.body;
+
+    const allCategories = await Category.findAll();
+    const allCategoriesIds = allCategories
+      .map(({ dataValues: { id } }) => id);
+
+    const validation = categoryIds.every((id) => allCategoriesIds.includes(id));
+
+    if (!validation) {
+      return res.status(400).json({
+        message: '"categoryIds" not found',
+      });
+    }
+
+    if (!title || !content || !categoryIds) {
+      return res.status(400).json({
+        message: EMPTY_FIELD_ERROR,
+      });
+    }
+
+    next();
   },
 };

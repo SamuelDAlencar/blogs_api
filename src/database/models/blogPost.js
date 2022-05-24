@@ -6,15 +6,16 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER,
     published: {
       type: DataTypes.DATE,
-      defaultValue: sequelize.literal('NOW()')
+      defaultValue: DataTypes.NOW
     },
     updated: {
       type: DataTypes.DATE,
-      defaultValue: sequelize.literal('NOW()')
+      defaultValue: DataTypes.NOW
     }
   }, {
     sequelize,
     modelName: 'BlogPost',
+    timestamps: false,
   });
 
   BlogPost.associate = (models) => {
