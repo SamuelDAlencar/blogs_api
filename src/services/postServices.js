@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { BlogPost, User, PostCategory } = require('../database/models');
+const { BlogPost, User, PostCategory, Category } = require('../database/models');
 
 module.exports = {
   post: async ({ title, content, categoryIds }, token) => {
@@ -13,5 +13,23 @@ module.exports = {
     });
 
     return { post, categoryPost };
+  },
+
+  getAll: async () => {
+    const posts = await BlogPost.findAll({
+      include: [{
+        model: User,
+        as: 'user',
+        attributes: { exclude: ['password'] },
+      }, {
+        model: Category,
+        as: 'categories',
+        through: {
+          attributes: [],
+        },
+      }],
+    });
+
+    return posts;
   },
 };

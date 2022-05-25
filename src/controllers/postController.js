@@ -10,4 +10,10 @@ module.exports = {
       return res.status(error.status).json({ message: error.message });
     }
   },
+
+  getAll: async (req, res) => {
+    const posts = await postServices.getAll();
+
+    return res.status(200).json(posts);
+  },
 };
