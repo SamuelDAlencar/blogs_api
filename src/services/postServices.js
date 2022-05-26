@@ -45,14 +45,34 @@ module.exports = {
         as: 'categories',
         through: {
           attributes: [],
-        } }] });
+        },
+      }],
+    });
 
     if (post) return post;
 
-    const error = {
-      status: 404,
-      message: 'Post does not exist',
-    };
+    const error = { status: 404, message: 'Post does not exist' };
     throw error;
+  },
+
+  updateById: async (id, { title, content }) => {
+    await BlogPost.update({ title, content }, { where: { id } });
+
+    const updatedPost = await BlogPost.findOne({
+      where: { id },
+      include: [{
+        model: User,
+        as: 'user',
+        attributes: { exclude: ['password'] },
+      }, {
+        model: Category,
+        as: 'categories',
+        through: {
+          attributes: [],
+        },
+      }],
+    });
+
+    return updatedPost;
   },
 };

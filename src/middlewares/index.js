@@ -1,8 +1,9 @@
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
-const { User, Category } = require('../database/models');
+const { User, Category, BlogPost } = require('../database/models');
 
 const EMPTY_FIELD_ERROR = 'Some required fields are missing';
+const secret = process.env.JWT_SECRET;
 
 const loginJoi = (data) => {
   const schema = Joi.object({
@@ -82,7 +83,6 @@ module.exports = {
         return res.status(401).json({ message: 'Token not found' });
       }
 
-      const secret = process.env.JWT_SECRET;
       const decodedToken = jwt.verify(token, secret);
       const user = await User.findOne({ where: { email: decodedToken.data } });
 
@@ -117,6 +117,28 @@ module.exports = {
       return res.status(400).json({
         message: EMPTY_FIELD_ERROR,
       });
+    }
+
+    next();
+  },
+
+  validatePostUpdate: async (req, res, next) => {
+    const { id } = req.params;
+    const { title, content } = req.body;
+    const token = req.headers.authorization;
+    const decodedToken = jwt.verify(token, secret);
+
+    const { user: { id: postUserId } } = await BlogPost
+      .findByPk(id, { include: { model: User, as: 'user' } });
+
+    const { id: updateUserId } = await User.findOne({ where: { email: decodedToken.data } });
+
+    if (postUserId !== updateUserId) {
+      return res.status(401).json({ message: 'Unauthorized user' });
+    }
+
+    if (!title || !content) {
+      return res.status(400).json({ message: 'Some required fields are missing' });
     }
 
     next();
