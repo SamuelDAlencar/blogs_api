@@ -87,12 +87,12 @@ module.exports = {
         [Op.or]: {
           title: { [Op.substring]: query },
           content: { [Op.substring]: query },
-        },
-      },
+        } },
       include: [{
         model: User,
         as: 'user',
         attributes: { exclude: ['password'] },
+        // where: { id: { $col: 'BlogPosts.userId' } },
       }, {
         model: Category,
         as: 'categories',
