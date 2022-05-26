@@ -51,4 +51,10 @@ module.exports = {
       return res.status(error.status).json({ message: error.message });
     }
   },
+
+  getByQuery: async (req, res) => {
+    const posts = await postServices.getByQuery(req.query.q);
+
+    return res.status(200).json(posts);
+  },
 };

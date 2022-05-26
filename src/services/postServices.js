@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { Op } = require('sequelize');
 const { BlogPost, User, PostCategory, Category } = require('../database/models');
 
 module.exports = {
@@ -78,5 +79,27 @@ module.exports = {
 
   deleteById: async (id) => {
     await BlogPost.destroy({ where: { id } });
+  },
+
+  getByQuery: async (query) => {
+    const posts = await BlogPost.findAll({
+      where: {
+        [Op.or]: {
+          title: { [Op.substring]: query },
+          content: { [Op.substring]: query },
+        },
+      },
+      include: [{
+        model: User,
+        as: 'user',
+        attributes: { exclude: ['password'] },
+      }, {
+        model: Category,
+        as: 'categories',
+        through: { attributes: [] },
+      }],
+    });
+
+    return posts;
   },
 };

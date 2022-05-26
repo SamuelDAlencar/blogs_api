@@ -5,6 +5,7 @@ const {
   getById,
   updateById,
   deleteById,
+  getByQuery,
 } = require('../../controllers/postController');
 const {
   validateToken,
@@ -17,6 +18,7 @@ const router = express.Router();
 
 router.post('/', validateToken, validatePost, post);
 router.get('/', validateToken, getAll);
+router.get('/search', validateToken, getByQuery);
 router.get('/:id', validateToken, getById);
 router.put('/:id', validateToken, validatePostUpdate, updateById);
 router.delete('/:id', validateToken, validatePostDeletion, deleteById);
