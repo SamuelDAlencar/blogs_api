@@ -1,3 +1,5 @@
+const secret = process.env.JWT_SECRET;
+const jwt = require('jsonwebtoken');
 const { User } = require('../database/models');
 const generateJwt = require('../utils/generateJwt');
 
@@ -32,5 +34,12 @@ module.exports = {
     }
 
     return user;
+  },
+
+  deleteAccount: async (token) => {
+    const decodedToken = jwt.verify(token, secret);
+    const { id } = await User.findOne({ where: { email: decodedToken.data } });
+
+    await User.destroy({ where: { id } });
   },
 };

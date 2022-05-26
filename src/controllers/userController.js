@@ -22,4 +22,10 @@ module.exports = {
       return res.status(error.status).json({ message: error.message });
     }
   },
+
+  deleteAccount: async (req, res) => {
+    await userServices.deleteAccount(req.headers.authorization);
+
+    return res.status(204).end();
+  },
 };
