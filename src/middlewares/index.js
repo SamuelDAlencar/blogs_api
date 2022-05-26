@@ -143,4 +143,27 @@ module.exports = {
 
     next();
   },
+
+  validatePostDeletion: async (req, res, next) => {
+    const { id } = req.params;
+    const token = req.headers.authorization;
+    const decodedToken = jwt.verify(token, secret);
+
+    const post = await BlogPost
+      .findByPk(id, { include: { model: User, as: 'user' } });
+
+    if (!post) {
+      return res.status(404).json({ message: 'Post does not exist' });
+    }
+
+    const postUserId = post.dataValues.userId;
+
+    const { id: deletionUserId } = await User.findOne({ where: { email: decodedToken.data } });
+
+    if (postUserId !== deletionUserId) {
+      return res.status(401).json({ message: 'Unauthorized user' });
+    }
+
+    next();
+  },
 };

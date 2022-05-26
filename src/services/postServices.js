@@ -75,4 +75,8 @@ module.exports = {
 
     return updatedPost;
   },
+
+  deleteById: async (id) => {
+    await BlogPost.destroy({ where: { id } });
+  },
 };

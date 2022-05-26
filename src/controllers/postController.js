@@ -39,4 +39,16 @@ module.exports = {
       return res.status(error.status).json({ message: error.message });
     }
   },
+
+  deleteById: async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      await postServices.deleteById(id);
+
+      return res.status(204).end();
+    } catch (error) {
+      return res.status(error.status).json({ message: error.message });
+    }
+  },
 };
