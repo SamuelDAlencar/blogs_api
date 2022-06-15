@@ -16,3 +16,6 @@
 
   * Create a `node.js` application using the `sequelize` package
   * Make a `CRUD` of posts
+# Endpoints
+
+This application has a sign in and a log in
