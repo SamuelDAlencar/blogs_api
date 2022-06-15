@@ -9,6 +9,7 @@
  * If using docker, run these two in order:
    1. `docker attach blogs_api`
    2. Inside the container bash: `npm start`
+  > If an error occurs, check if there's no application running on port `3000`
  * Without docker, just run `npm start`
 
 # Skills put into practice ✍:
