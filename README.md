@@ -4,8 +4,8 @@
  
 # How to run and test the application
 
- 1 - Clone this rep: (SSH) "`git clone git@github.com:SamuelDAlencar/blogs_api.git`"
- 2 - To run it without `Docker`, inside its folder, install all dependencies with "`npm install`"
+ 1. Clone this rep: (SSH) "`git clone git@github.com:SamuelDAlencar/blogs_api.git`"
+ 2. To run it without `Docker`, inside its folder, install all dependencies with "`npm install`"
 
 # Skills put into practice  👨‍💻:
 
