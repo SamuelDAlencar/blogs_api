@@ -18,4 +18,12 @@
   * Make a `CRUD` of posts
 # Endpoints
 
-This application has a sign in and a log in
+## POST `/login`
+- O endpoint deve ser acessível através do URL `/login`;
+- O corpo da requisição deverá seguir o formato abaixo:
+  ```json
+  {
+    "email": "lewishamilton@gmail.com",
+    "password": "123456"
+  }
+  ```
