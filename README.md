@@ -1,8 +1,13 @@
 # Blogs API 📰
 
- API and database for producing content to a blog! 
+ API and database to produce content for a blog
+ 
+# How to run and test the application
+
+ 1 - Clone this rep: (SSH) "`git clone git@github.com:SamuelDAlencar/blogs_api.git`"
+ 2 - To run it without `Docker`, inside its folder, install all dependencies with "`npm install`"
 
 # Skills put into practice  👨‍💻:
 
-  * Create an `API RESTful` using the `sequelize` package
-  * Make a `CRUD` in a `node.js` application
+  * Create a `node.js` application using the `sequelize` package
+  * Make a `CRUD` of posts
