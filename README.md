@@ -16,9 +16,9 @@
 
   * Create a `node.js` application using the `sequelize` package
   * Make a `CRUD` of posts
-# Endpoints
 
-## POST `/login`
+# Endpoints
+### POST `/login`
 - O endpoint deve ser acessível através do URL `/login`;
 - O corpo da requisição deverá seguir o formato abaixo:
   ```json
