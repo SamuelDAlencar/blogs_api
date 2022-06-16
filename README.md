@@ -2,6 +2,11 @@
 
  API and database to produce content for a blog
  
+# Skills put into practice ✍:
+
+  * Create a `node.js` application using the `sequelize` package
+  * Make a `CRUD` of posts
+ 
 # How to run and test the application 👨‍💻:
 
  * Clone this rep: (SSH) `git clone git@github.com:SamuelDAlencar/blogs_api.git` in the terminal
@@ -12,13 +17,8 @@
   > If an error occurs saying that the port is on use, check if there's other application running on port `3000`
  * Without docker, just run `npm start`
 
-Now the application and the database should be already running, to access the endpoints you can try in your browser, or applications like `insomnia` and `postman`
+Now the application and the database should be already running, to access the endpoints you can try in your browser, or applications like `insomnia` or `postman`
 > The URL should be `http://localhost:3000`, for both ways (docker and no docker)
-
-# Skills put into practice ✍:
-
-  * Create a `node.js` application using the `sequelize` package
-  * Make a `CRUD` of posts
 
 # Endpoints:
 
@@ -131,4 +131,3 @@ Now the application and the database should be already running, to access the en
   ```js
     http://localhost:PORT/post/search?q=vamos
   ```
- 
